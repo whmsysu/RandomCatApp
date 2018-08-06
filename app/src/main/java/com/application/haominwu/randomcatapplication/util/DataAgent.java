@@ -1,6 +1,6 @@
 package com.application.haominwu.randomcatapplication.util;
 
-import com.application.haominwu.randomcatapplication.callback.GetACatCallback;
+import com.application.haominwu.randomcatapplication.callback.OnCatRetrieveCallback;
 import com.application.haominwu.randomcatapplication.callback.HttpJSONCallback;
 import com.application.haominwu.randomcatapplication.model.Cat;
 import com.google.gson.Gson;
@@ -20,18 +20,18 @@ public class DataAgent {
     /**
      * Fetch a cat api call
      */
-    public static void fetchACat(final GetACatCallback getACatCallback){
+    public static void fetchACat(final OnCatRetrieveCallback onCatRetrieveCallback){
         HttpUtil.getInstance().fetchCatApiCall(new HttpJSONCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 Gson gson = new Gson();
                 Cat cat = gson.fromJson(jsonObject.toString(), Cat.class);
-                getACatCallback.onResponse(cat);
+                onCatRetrieveCallback.onResponse(cat);
             }
 
             @Override
             public void onFailure(Exception e) {
-                getACatCallback.onFailure(e);
+                onCatRetrieveCallback.onFailure(e);
             }
         });
     }
