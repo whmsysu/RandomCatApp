@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements CatImageDisplayVi
         buttonFetchACat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                basePresenter.fetchRandomCat();
+                basePresenter.fetchARandomCat();
             }
         });
     }

@@ -20,25 +20,4 @@ public class Cat {
 
     @SerializedName("file")
     private String file;
-
-
-    /**
-     * Fetch a cat api call
-     */
-    public static void fetchCat(final GetACatCallback getACatCallback){
-        HttpUtil.getInstance().fetchCatApiCall(new HttpJSONCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                Gson gson = new Gson();
-                Cat cat = gson.fromJson(jsonObject.toString(), Cat.class);
-                getACatCallback.onResponse(cat);
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                getACatCallback.onFailure(e);
-            }
-        });
-    }
-
 }

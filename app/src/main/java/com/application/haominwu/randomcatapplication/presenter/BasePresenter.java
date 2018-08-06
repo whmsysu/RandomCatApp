@@ -1,5 +1,6 @@
 package com.application.haominwu.randomcatapplication.presenter;
 
+import com.application.haominwu.randomcatapplication.util.DataAgent;
 import com.application.haominwu.randomcatapplication.view.CatImageDisplayView;
 import com.application.haominwu.randomcatapplication.callback.GetACatCallback;
 import com.application.haominwu.randomcatapplication.model.Cat;
@@ -20,8 +21,8 @@ public class BasePresenter {
     /**
      * Fetch a random cat
      */
-    public void fetchRandomCat(){
-        Cat.fetchCat(new GetACatCallback() {
+    public void fetchARandomCat(){
+        DataAgent.getInstance().fetchACat(new GetACatCallback() {
             @Override
             public void onResponse(Cat nowCat) {
                 cat = nowCat;
