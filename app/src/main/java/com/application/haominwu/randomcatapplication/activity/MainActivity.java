@@ -3,7 +3,6 @@ package com.application.haominwu.randomcatapplication.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.application.haominwu.randomcatapplication.R;
@@ -13,6 +12,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class MainActivity extends AppCompatActivity implements CatImageDisplayView {
@@ -20,8 +20,10 @@ public class MainActivity extends AppCompatActivity implements CatImageDisplayVi
     @BindView(R.id.iv_cat)
     ImageView imageViewCat;
 
-    @BindView(R.id.btn_random_cat)
-    Button buttonFetchACat;
+    @OnClick(R.id.btn_random_cat)
+    public void onBtnRandomCatClick(View view) {
+        basePresenter.fetchARandomCat();
+    }
 
     private BasePresenter basePresenter = new BasePresenter();
 
@@ -31,12 +33,6 @@ public class MainActivity extends AppCompatActivity implements CatImageDisplayVi
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         basePresenter.createPresenter(this);
-        buttonFetchACat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                basePresenter.fetchARandomCat();
-            }
-        });
     }
 
     @Override
