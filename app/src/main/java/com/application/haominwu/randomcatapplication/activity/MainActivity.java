@@ -1,21 +1,19 @@
 package com.application.haominwu.randomcatapplication.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.application.haominwu.randomcatapplication.R;
-import com.application.haominwu.randomcatapplication.view.CatImageDisplayView;
 import com.application.haominwu.randomcatapplication.presenter.BasePresenter;
+import com.application.haominwu.randomcatapplication.view.CatImageDisplayView;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class MainActivity extends AppCompatActivity implements CatImageDisplayView {
+public class MainActivity extends BaseActivity implements CatImageDisplayView {
 
     @BindView(R.id.iv_cat)
     ImageView imageViewCat;
@@ -30,9 +28,12 @@ public class MainActivity extends AppCompatActivity implements CatImageDisplayVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
         basePresenter.createPresenter(this);
+    }
+
+    @Override
+    public int getLayoutResId() {
+        return R.layout.activity_main;
     }
 
     @Override
