@@ -3,7 +3,6 @@ package com.application.haominwu.randomcatapplication.presenter;
 import com.application.haominwu.randomcatapplication.model.Cat;
 import com.application.haominwu.randomcatapplication.util.DataAgent;
 import com.application.haominwu.randomcatapplication.view.CatImageDisplayView;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;

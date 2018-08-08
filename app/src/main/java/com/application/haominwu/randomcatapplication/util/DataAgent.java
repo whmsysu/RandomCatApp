@@ -10,6 +10,7 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class DataAgent {
     private static final DataAgent ourInstance = new DataAgent();
@@ -51,7 +52,7 @@ public class DataAgent {
                     }
                 });
             }
-        });
+        }).subscribeOn(Schedulers.newThread());
         return observable;
     }
 }
