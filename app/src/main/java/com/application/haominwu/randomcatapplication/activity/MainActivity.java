@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.application.haominwu.randomcatapplication.R;
-import com.application.haominwu.randomcatapplication.presenter.BasePresenter;
+import com.application.haominwu.randomcatapplication.presenter.CatImagePresenter;
 import com.application.haominwu.randomcatapplication.view.CatImageDisplayView;
 import com.squareup.picasso.Picasso;
 
@@ -23,12 +23,12 @@ public class MainActivity extends BaseActivity implements CatImageDisplayView {
         basePresenter.fetchARandomCat();
     }
 
-    private BasePresenter basePresenter = new BasePresenter();
+    public CatImagePresenter basePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        basePresenter.createPresenter(this);
+        basePresenter = new CatImagePresenter(this);
     }
 
     @Override
