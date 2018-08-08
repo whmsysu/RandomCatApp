@@ -6,16 +6,16 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.application.haominwu.randomcatapplication.R;
+import com.application.haominwu.randomcatapplication.contract.CatDisplayContract;
 import com.application.haominwu.randomcatapplication.presenter.CatImagePresenter;
 import com.application.haominwu.randomcatapplication.util.Util;
-import com.application.haominwu.randomcatapplication.view.CatImageDisplayView;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class MainActivity extends BaseActivity implements CatImageDisplayView {
+public class MainActivity extends BaseActivity implements CatDisplayContract.View {
 
     @BindView(R.id.iv_cat)
     ImageView imageViewCat;
@@ -33,7 +33,8 @@ public class MainActivity extends BaseActivity implements CatImageDisplayView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        basePresenter = new CatImagePresenter(this);
+        basePresenter = new CatImagePresenter();
+        basePresenter.takeView(this);
     }
 
     @Override
@@ -60,6 +61,6 @@ public class MainActivity extends BaseActivity implements CatImageDisplayView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        basePresenter.onDestroy();
+        basePresenter.dropView();
     }
 }

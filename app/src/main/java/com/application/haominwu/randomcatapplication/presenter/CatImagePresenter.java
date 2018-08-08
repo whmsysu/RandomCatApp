@@ -1,9 +1,8 @@
 package com.application.haominwu.randomcatapplication.presenter;
 
+import com.application.haominwu.randomcatapplication.contract.CatDisplayContract;
 import com.application.haominwu.randomcatapplication.model.Cat;
 import com.application.haominwu.randomcatapplication.util.DataAgent;
-import com.application.haominwu.randomcatapplication.view.CatImageDisplayView;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,21 +11,12 @@ import java.util.Random;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 
 
-public class CatImagePresenter {
+public class CatImagePresenter implements CatDisplayContract.Presenter{
 
     private Cat cat;
-    private CatImageDisplayView baseView;
-
-    public CatImagePresenter(CatImageDisplayView baseView) {
-        this.baseView = baseView;
-    }
-
-    public void onDestroy() {
-        this.baseView = null;
-    }
+    private CatDisplayContract.View baseView;
 
     /**
      * Fetch two random cats, choose one to display
@@ -92,5 +82,15 @@ public class CatImagePresenter {
             }
         });
 
+    }
+
+    @Override
+    public void takeView(CatDisplayContract.View view) {
+        this.baseView = view;
+    }
+
+    @Override
+    public void dropView() {
+        this.baseView = null;
     }
 }
