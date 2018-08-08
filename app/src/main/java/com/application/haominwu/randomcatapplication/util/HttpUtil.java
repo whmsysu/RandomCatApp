@@ -39,6 +39,7 @@ public class HttpUtil {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         emitter.onError(e);
+                        emitter.onComplete();
                     }
 
                     @Override
@@ -46,8 +47,10 @@ public class HttpUtil {
                         try {
                             JSONObject responseObject=new JSONObject(response.body().string());
                             emitter.onNext(responseObject);
+                            emitter.onComplete();
                         } catch (JSONException e) {
                             emitter.onError(e);
+                            emitter.onComplete();
                         }
                     }
                 });

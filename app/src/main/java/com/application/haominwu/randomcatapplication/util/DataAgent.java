@@ -26,8 +26,7 @@ public class DataAgent {
         Observable observable = Observable.create(new ObservableOnSubscribe<Cat>(){
             @Override
             public void subscribe(final ObservableEmitter<Cat> emitter) throws Exception {
-
-                Observer<JSONObject> observer = new Observer<JSONObject>(){
+                HttpUtil.getInstance().fetchACatApiCall().subscribe(new Observer<JSONObject>(){
                     @Override
                     public void onSubscribe(Disposable d) {
 
@@ -38,6 +37,7 @@ public class DataAgent {
                         Gson gson = new Gson();
                         Cat cat = gson.fromJson(jsonObject.toString(), Cat.class);
                         emitter.onNext(cat);
+                        emitter.onComplete();
                     }
 
                     @Override
@@ -49,8 +49,7 @@ public class DataAgent {
                     public void onComplete() {
 
                     }
-                };
-                HttpUtil.getInstance().fetchACatApiCall().subscribe(observer);
+                });
             }
         });
         return observable;

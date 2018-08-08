@@ -3,7 +3,13 @@ package com.application.haominwu.randomcatapplication.presenter;
 import com.application.haominwu.randomcatapplication.model.Cat;
 import com.application.haominwu.randomcatapplication.util.DataAgent;
 import com.application.haominwu.randomcatapplication.view.CatImageDisplayView;
+import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -22,20 +28,21 @@ public class CatImagePresenter {
     }
 
     /**
-     * Fetch a random cat
+     * Fetch two random cats, choose one to display
      */
     public void fetchARandomCat(){
         this.baseView.showLoading();
-        Observer<Cat> observer = new Observer<Cat>() {
+        final List<Cat> cats = new ArrayList<>();
+        Observable<Object> merge = Observable.merge(DataAgent.getInstance().getACat(), DataAgent.getInstance().getACat());
+        merge.subscribe(new Observer<Object>() {
             @Override
             public void onSubscribe(Disposable d) {
 
             }
 
             @Override
-            public void onNext(Cat nowCat) {
-                cat = nowCat;
-                if (baseView != null) baseView.updateImage(cat.getFile());
+            public void onNext(Object o) {
+                cats.add((Cat)o);
             }
 
             @Override
@@ -45,9 +52,12 @@ public class CatImagePresenter {
 
             @Override
             public void onComplete() {
-
+                Random random = new Random();
+                int index = random.nextInt(1);
+                cat = cats.get(index);
+                baseView.updateImage(cat.getFile());
             }
-        };
-        DataAgent.getInstance().getACat().subscribe(observer);
+        });
+
     }
 }
