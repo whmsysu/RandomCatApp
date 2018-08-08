@@ -3,9 +3,11 @@ package com.application.haominwu.randomcatapplication.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.application.haominwu.randomcatapplication.R;
 import com.application.haominwu.randomcatapplication.presenter.CatImagePresenter;
+import com.application.haominwu.randomcatapplication.util.Util;
 import com.application.haominwu.randomcatapplication.view.CatImageDisplayView;
 import com.squareup.picasso.Picasso;
 
@@ -17,6 +19,9 @@ public class MainActivity extends BaseActivity implements CatImageDisplayView {
 
     @BindView(R.id.iv_cat)
     ImageView imageViewCat;
+
+    @BindView(R.id.pb)
+    ProgressBar pb;
 
     @OnClick(R.id.btn_random_cat)
     public void onBtnRandomCatClick(View view) {
@@ -41,9 +46,15 @@ public class MainActivity extends BaseActivity implements CatImageDisplayView {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Picasso.get().load(url).into(imageViewCat);
+                pb.setVisibility(View.GONE);
+                Picasso.get().load(url).resize(Util.convertDipOrPx(MainActivity.this, 200), Util.convertDipOrPx(MainActivity.this, 200)).centerCrop().into(imageViewCat);
             }
         });
+    }
+
+    @Override
+    public void showLoading() {
+        pb.setVisibility(View.VISIBLE);
     }
 
     @Override

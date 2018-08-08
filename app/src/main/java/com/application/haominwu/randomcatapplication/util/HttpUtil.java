@@ -1,12 +1,14 @@
 package com.application.haominwu.randomcatapplication.util;
 
-import com.application.haominwu.randomcatapplication.callback.HttpJSONCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -26,29 +28,31 @@ public class HttpUtil {
 
     }
 
-    /**
-     *
-     * @param httpJSONCallback
-     */
-    public void fetchCatApiCall(final HttpJSONCallback httpJSONCallback){
-        Request request = new Request.Builder().url("https://aws.random.cat/meow")
-                .get().build();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
+    public Observable fetchACatApiCall(){
+        Observable observable = Observable.create(new ObservableOnSubscribe<JSONObject>(){
             @Override
-            public void onFailure(Call call, IOException e) {
-                httpJSONCallback.onFailure(e);
-            }
+            public void subscribe(final ObservableEmitter<JSONObject> emitter) throws Exception {
+                Request request = new Request.Builder().url("https://aws.random.cat/meow")
+                        .get().build();
+                Call call = okHttpClient.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        emitter.onError(e);
+                    }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    JSONObject responseObject=new JSONObject(response.body().string());
-                    httpJSONCallback.onResponse(responseObject);
-                } catch (JSONException e) {
-                    httpJSONCallback.onFailure(e);
-                }
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            JSONObject responseObject=new JSONObject(response.body().string());
+                            emitter.onNext(responseObject);
+                        } catch (JSONException e) {
+                            emitter.onError(e);
+                        }
+                    }
+                });
             }
         });
+        return observable;
     }
 }

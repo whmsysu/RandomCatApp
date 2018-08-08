@@ -1,7 +1,5 @@
 package com.application.haominwu.randomcatapplication.util;
 
-import com.application.haominwu.randomcatapplication.callback.OnCatRetrieveCallback;
-import com.application.haominwu.randomcatapplication.callback.HttpJSONCallback;
 import com.application.haominwu.randomcatapplication.model.Cat;
 import com.google.gson.Gson;
 
@@ -10,6 +8,8 @@ import org.json.JSONObject;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class DataAgent {
     private static final DataAgent ourInstance = new DataAgent();
@@ -21,42 +21,36 @@ public class DataAgent {
     private DataAgent() {
     }
 
-    /**
-     * Fetch a cat api call
-     */
-    public void fetchACat(final OnCatRetrieveCallback onCatRetrieveCallback){
-        HttpUtil.getInstance().fetchCatApiCall(new HttpJSONCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                Gson gson = new Gson();
-                Cat cat = gson.fromJson(jsonObject.toString(), Cat.class);
-                onCatRetrieveCallback.onResponse(cat);
-            }
+    public Observable getACat(){
 
-            @Override
-            public void onFailure(Exception e) {
-                onCatRetrieveCallback.onFailure(e);
-            }
-        });
-    }
-
-    public Observable observeACat(){
         Observable observable = Observable.create(new ObservableOnSubscribe<Cat>(){
             @Override
             public void subscribe(final ObservableEmitter<Cat> emitter) throws Exception {
-                HttpUtil.getInstance().fetchCatApiCall(new HttpJSONCallback() {
+
+                Observer<JSONObject> observer = new Observer<JSONObject>(){
                     @Override
-                    public void onResponse(JSONObject jsonObject) {
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(JSONObject jsonObject) {
                         Gson gson = new Gson();
                         Cat cat = gson.fromJson(jsonObject.toString(), Cat.class);
                         emitter.onNext(cat);
                     }
 
                     @Override
-                    public void onFailure(Exception e) {
-                        emitter.onError(e);
+                    public void onError(Throwable e) {
+
                     }
-                });
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                };
+                HttpUtil.getInstance().fetchACatApiCall().subscribe(observer);
             }
         });
         return observable;
