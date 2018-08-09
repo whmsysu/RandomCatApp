@@ -6,10 +6,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.application.haominwu.randomcatapplication.R;
+import com.application.haominwu.randomcatapplication.component.DaggerMainComponent;
 import com.application.haominwu.randomcatapplication.contract.CatDisplayContract;
+import com.application.haominwu.randomcatapplication.module.MainModule;
 import com.application.haominwu.randomcatapplication.presenter.CatImagePresenter;
 import com.application.haominwu.randomcatapplication.util.Util;
 import com.squareup.picasso.Picasso;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -28,13 +32,16 @@ public class MainActivity extends BaseActivity implements CatDisplayContract.Vie
         basePresenter.fetchARandomCat();
     }
 
+    @Inject
     public CatImagePresenter basePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        basePresenter = new CatImagePresenter();
-        basePresenter.takeView(this);
+        DaggerMainComponent.builder()
+                .mainModule(new MainModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override

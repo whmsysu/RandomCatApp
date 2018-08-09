@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -16,7 +18,12 @@ import io.reactivex.disposables.Disposable;
 public class CatImagePresenter implements CatDisplayContract.Presenter{
 
     private Cat cat;
-    private CatDisplayContract.View baseView;
+    private CatDisplayContract.View mView;
+
+    @Inject
+    public CatImagePresenter(CatDisplayContract.View view) {
+        mView = view;
+    }
 
     /**
      * Fetch two random cats, choose one to display
@@ -54,7 +61,7 @@ public class CatImagePresenter implements CatDisplayContract.Presenter{
 //        });
 
 //        Merge call
-        this.baseView.showLoading();
+        mView.showLoading();
         final List<Cat> cats = new ArrayList<>();
         Observable<Object> merge = Observable.merge(DataAgent.getInstance().getACat(), DataAgent.getInstance().getACat());
         merge.subscribe(new Observer<Object>() {
@@ -78,19 +85,14 @@ public class CatImagePresenter implements CatDisplayContract.Presenter{
                 Random random = new Random();
                 int index = random.nextInt(1);
                 cat = cats.get(index);
-                baseView.updateImage(cat.getFile());
+                mView.updateImage(cat.getFile());
             }
         });
 
     }
 
     @Override
-    public void takeView(CatDisplayContract.View view) {
-        this.baseView = view;
-    }
-
-    @Override
     public void dropView() {
-        this.baseView = null;
+        mView = null;
     }
 }
