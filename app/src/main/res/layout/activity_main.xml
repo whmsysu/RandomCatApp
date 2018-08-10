@@ -19,11 +19,22 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Random A Cat"
+            android:text="Random A Cat one by one"
             android:textSize="21sp"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/btn_random_cat"
+            android:id="@+id/btn_random_cat_one_by_one"
             />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Random A Cat Two api call"
+            android:textSize="21sp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/btn_random_cat_two_api_call"
+            android:layout_marginTop="20dp"
+            />
+
         <FrameLayout
             android:layout_width="200dp"
             android:layout_height="200dp"

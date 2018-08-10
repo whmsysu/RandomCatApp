@@ -27,9 +27,14 @@ public class MainActivity extends BaseActivity implements CatDisplayContract.Vie
     @BindView(R.id.pb)
     ProgressBar pb;
 
-    @OnClick(R.id.btn_random_cat)
-    public void onBtnRandomCatClick(View view) {
-        basePresenter.fetchARandomCat();
+    @OnClick(R.id.btn_random_cat_one_by_one)
+    public void onBtnRandomCatClickOneByOne(){
+        basePresenter.fetchARandomCatOneByOne();
+    }
+
+    @OnClick(R.id.btn_random_cat_two_api_call)
+    public void onBtnRandomCatClickTwoApiCall(View view) {
+        basePresenter.fetchARandomCatByTwoApiCall();
     }
 
     @Inject

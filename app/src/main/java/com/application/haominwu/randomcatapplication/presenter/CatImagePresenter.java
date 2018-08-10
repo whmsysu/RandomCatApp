@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 
 
 public class CatImagePresenter implements CatDisplayContract.Presenter{
@@ -26,40 +27,45 @@ public class CatImagePresenter implements CatDisplayContract.Presenter{
     }
 
     /**
+     * Fetch a random cat and then fetch another random cat
+     */
+    public void fetchARandomCatOneByOne() {
+        //Link call
+        mView.showLoading();
+        DataAgent.getInstance().getACat().flatMap(new Function<Cat, Observable<Cat>>() {
+            @Override
+            public Observable<Cat> apply(Cat cat) throws Exception {
+                return DataAgent.getInstance().getACat();
+            }
+        }).subscribe(new Observer<Cat>(){
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Cat nowCat) {
+                cat = nowCat;
+                mView.updateImage(cat.getFile());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    /**
      * Fetch two random cats, choose one to display
      */
-    public void fetchARandomCat(){
-        //Link call
-//        this.baseView.showLoading();
-//        DataAgent.getInstance().getACat().flatMap(new Function<Cat, Observable<Cat>>() {
-//            @Override
-//            public Observable<Cat> apply(Cat cat) throws Exception {
-//                return DataAgent.getInstance().getACat();
-//            }
-//        }).subscribe(new Observer<Cat>(){
-//
-//            @Override
-//            public void onSubscribe(Disposable d) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(Cat nowCat) {
-//                cat = nowCat;
-//                baseView.updateImage(cat.getFile());
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//
-//            }
-//        });
-
+    public void fetchARandomCatByTwoApiCall(){
 //        Merge call
         mView.showLoading();
         final List<Cat> cats = new ArrayList<>();

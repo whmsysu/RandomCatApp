@@ -11,6 +11,7 @@ public interface CatDisplayContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void fetchARandomCat();
+        void fetchARandomCatOneByOne();
+        void fetchARandomCatByTwoApiCall();
     }
 }
