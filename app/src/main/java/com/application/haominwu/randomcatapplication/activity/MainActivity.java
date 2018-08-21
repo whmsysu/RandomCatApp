@@ -10,7 +10,7 @@ import com.application.haominwu.randomcatapplication.component.DaggerMainCompone
 import com.application.haominwu.randomcatapplication.contract.CatDisplayContract;
 import com.application.haominwu.randomcatapplication.module.MainModule;
 import com.application.haominwu.randomcatapplication.presenter.CatImagePresenter;
-import com.application.haominwu.randomcatapplication.util.Util;
+import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
@@ -78,7 +78,7 @@ public class MainActivity extends BaseActivity implements CatDisplayContract.Vie
     public void updateImage(final String url) {
         runOnUiThread(() -> {
             pb.setVisibility(View.GONE);
-            Picasso.get().load(url).resize(Util.convertDipOrPx(MainActivity.this, 200), Util.convertDipOrPx(MainActivity.this, 200)).centerCrop().into(imageViewCat);
+            Picasso.get().load(url).resize(ConvertUtils.dp2px(200), ConvertUtils.dp2px(200)).centerCrop().into(imageViewCat);
         });
     }
 
