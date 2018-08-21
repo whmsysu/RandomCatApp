@@ -41,5 +41,7 @@ dependencies {
     implementation 'com.google.dagger:dagger:+'
     annotationProcessor 'com.google.dagger:dagger-compiler:+'
     implementation 'com.jakewharton.rxbinding2:rxbinding:+'
+    implementation 'com.blankj:utilcode:+'
+
 
 }

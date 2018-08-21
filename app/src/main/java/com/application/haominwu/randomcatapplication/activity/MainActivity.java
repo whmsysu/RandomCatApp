@@ -11,6 +11,7 @@ import com.application.haominwu.randomcatapplication.contract.CatDisplayContract
 import com.application.haominwu.randomcatapplication.module.MainModule;
 import com.application.haominwu.randomcatapplication.presenter.CatImagePresenter;
 import com.application.haominwu.randomcatapplication.util.Util;
+import com.blankj.utilcode.util.NetworkUtils;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
 
@@ -47,15 +48,26 @@ public class MainActivity extends BaseActivity implements CatDisplayContract.Vie
                 .build()
                 .inject(this);
 
+
         RxView.clicks(oneByOneButton)
                 .throttleFirst(2, TimeUnit.SECONDS)
-                .subscribe(o -> basePresenter.fetchARandomCatOneByOne());
+                .subscribe(o -> {
+                    if (NetworkUtils.isConnected()){
+                        basePresenter.fetchARandomCatOneByOne();
+                    }
+
+                });
 
         RxView.clicks(twoApiCallButton)
                 .throttleFirst(2, TimeUnit.SECONDS)
-                .subscribe(o -> basePresenter.fetchARandomCatByTwoApiCall());
+                .subscribe(o -> {
+                    if (NetworkUtils.isConnected()){
+                        basePresenter.fetchARandomCatByTwoApiCall();
+                    }
+                });
 
     }
+
 
     @Override
     public int getLayoutResId() {
