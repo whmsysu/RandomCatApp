@@ -1,7 +1,7 @@
 package com.application.haominwu.randomcatapplication.activity;
 
-import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -11,12 +11,14 @@ import com.application.haominwu.randomcatapplication.contract.CatDisplayContract
 import com.application.haominwu.randomcatapplication.module.MainModule;
 import com.application.haominwu.randomcatapplication.presenter.CatImagePresenter;
 import com.application.haominwu.randomcatapplication.util.Util;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 
 public class MainActivity extends BaseActivity implements CatDisplayContract.View {
@@ -27,26 +29,32 @@ public class MainActivity extends BaseActivity implements CatDisplayContract.Vie
     @BindView(R.id.pb)
     ProgressBar pb;
 
-    @OnClick(R.id.btn_random_cat_one_by_one)
-    public void onBtnRandomCatClickOneByOne(){
-        basePresenter.fetchARandomCatOneByOne();
-    }
+    @BindView(R.id.btn_random_cat_one_by_one)
+    Button oneByOneButton;
 
-    @OnClick(R.id.btn_random_cat_two_api_call)
-    public void onBtnRandomCatClickTwoApiCall(View view) {
-        basePresenter.fetchARandomCatByTwoApiCall();
-    }
+    @BindView(R.id.btn_random_cat_two_api_call)
+    Button twoApiCallButton;
 
     @Inject
     public CatImagePresenter basePresenter;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void init() {
+        super.init();
         DaggerMainComponent.builder()
                 .mainModule(new MainModule(this))
                 .build()
                 .inject(this);
+
+        RxView.clicks(oneByOneButton)
+                .throttleFirst(2, TimeUnit.SECONDS)
+                .subscribe(o -> basePresenter.fetchARandomCatOneByOne());
+
+        RxView.clicks(twoApiCallButton)
+                .throttleFirst(2, TimeUnit.SECONDS)
+                .subscribe(o -> basePresenter.fetchARandomCatByTwoApiCall());
+
     }
 
     @Override
@@ -56,12 +64,9 @@ public class MainActivity extends BaseActivity implements CatDisplayContract.Vie
 
     @Override
     public void updateImage(final String url) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                pb.setVisibility(View.GONE);
-                Picasso.get().load(url).resize(Util.convertDipOrPx(MainActivity.this, 200), Util.convertDipOrPx(MainActivity.this, 200)).centerCrop().into(imageViewCat);
-            }
+        runOnUiThread(() -> {
+            pb.setVisibility(View.GONE);
+            Picasso.get().load(url).resize(Util.convertDipOrPx(MainActivity.this, 200), Util.convertDipOrPx(MainActivity.this, 200)).centerCrop().into(imageViewCat);
         });
     }
 
