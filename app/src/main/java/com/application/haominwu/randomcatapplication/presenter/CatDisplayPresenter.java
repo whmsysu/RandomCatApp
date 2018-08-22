@@ -17,13 +17,13 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 
 
-public class CatImagePresenter implements CatDisplayContract.Presenter{
+public class CatDisplayPresenter implements CatDisplayContract.Presenter{
 
     private Cat cat;
     private CatDisplayContract.View mView;
 
     @Inject
-    public CatImagePresenter(CatDisplayContract.View view) {
+    public CatDisplayPresenter(CatDisplayContract.View view) {
         mView = view;
     }
 
