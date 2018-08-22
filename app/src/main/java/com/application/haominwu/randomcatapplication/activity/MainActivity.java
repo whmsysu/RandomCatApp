@@ -8,16 +8,14 @@ import com.application.haominwu.randomcatapplication.view.CatDisplayView;
 
 public class MainActivity extends BaseActivity {
 
-    private CatDisplayView catDisplayView;
-
     private CatDisplayPresenter catDisplayPresenter;
 
     @Override
     protected void init() {
         super.init();
-        catDisplayView = new CatDisplayView(this, findViewById(R.id.lr_cat_display));
+        CatDisplayView catDisplayView = new CatDisplayView(findViewById(R.id.lr_cat_display));
         catDisplayPresenter = new CatDisplayPresenter(catDisplayView);
-        catDisplayView.setCatImagePresenter(catDisplayPresenter);
+        catDisplayView.setPresenter(catDisplayPresenter);
     }
 
 

@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 
@@ -33,12 +34,7 @@ public class CatDisplayPresenter implements CatDisplayContract.Presenter{
     public void fetchARandomCatOneByOne() {
         //Link call
         mView.showLoading();
-        DataAgent.getInstance().getACat().flatMap(new Function<Cat, Observable<Cat>>() {
-            @Override
-            public Observable<Cat> apply(Cat cat) throws Exception {
-                return DataAgent.getInstance().getACat();
-            }
-        }).subscribe(new Observer<Cat>(){
+        DataAgent.getInstance().getACat().flatMap((Function<Cat, Observable<Cat>>) cat -> DataAgent.getInstance().getACat()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Cat>(){
 
             @Override
             public void onSubscribe(Disposable d) {
@@ -71,7 +67,7 @@ public class CatDisplayPresenter implements CatDisplayContract.Presenter{
         mView.showLoading();
         final List<Cat> cats = new ArrayList<>();
         Observable<Object> merge = Observable.merge(DataAgent.getInstance().getACat(), DataAgent.getInstance().getACat());
-        merge.subscribe(new Observer<Object>() {
+        merge.observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Object>() {
             @Override
             public void onSubscribe(Disposable d) {
 
