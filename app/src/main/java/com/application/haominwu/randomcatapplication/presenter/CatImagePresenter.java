@@ -3,6 +3,7 @@ package com.application.haominwu.randomcatapplication.presenter;
 import com.application.haominwu.randomcatapplication.contract.CatDisplayContract;
 import com.application.haominwu.randomcatapplication.model.Cat;
 import com.application.haominwu.randomcatapplication.util.DataAgent;
+import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,12 +48,12 @@ public class CatImagePresenter implements CatDisplayContract.Presenter{
             @Override
             public void onNext(Cat nowCat) {
                 cat = nowCat;
-                mView.updateImage(cat.getFile());
+                mView.updateCatImage(cat.getFile());
             }
 
             @Override
             public void onError(Throwable e) {
-
+                ToastUtils.showShort(e.getMessage());
             }
 
             @Override
@@ -83,7 +84,7 @@ public class CatImagePresenter implements CatDisplayContract.Presenter{
 
             @Override
             public void onError(Throwable e) {
-
+                ToastUtils.showShort(e.getMessage());
             }
 
             @Override
@@ -91,7 +92,7 @@ public class CatImagePresenter implements CatDisplayContract.Presenter{
                 Random random = new Random();
                 int index = random.nextInt(1);
                 cat = cats.get(index);
-                mView.updateImage(cat.getFile());
+                mView.updateCatImage(cat.getFile());
             }
         });
 

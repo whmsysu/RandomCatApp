@@ -39,12 +39,12 @@ public class DataAgent {
 
             @Override
             public void onError(Throwable e) {
-
+                emitter.onError(e);
             }
 
             @Override
             public void onComplete() {
-
+                
             }
         })).subscribeOn(Schedulers.newThread());
         return observable;

@@ -75,7 +75,7 @@ public class MainActivity extends BaseActivity implements CatDisplayContract.Vie
     }
 
     @Override
-    public void updateImage(final String url) {
+    public void updateCatImage(final String url) {
         runOnUiThread(() -> {
             pb.setVisibility(View.GONE);
             Picasso.get().load(url).resize(ConvertUtils.dp2px(200), ConvertUtils.dp2px(200)).centerCrop().into(imageViewCat);

@@ -6,11 +6,11 @@ import com.application.haominwu.randomcatapplication.view.BaseView;
 public interface CatDisplayContract {
 
     interface View extends BaseView {
-        void updateImage(String url);
+        void updateCatImage(String url);
         void showLoading();
     }
 
-    interface Presenter extends BasePresenter<View> {
+    interface Presenter extends BasePresenter {
         void fetchARandomCatOneByOne();
         void fetchARandomCatByTwoApiCall();
     }

@@ -1,5 +1,5 @@
 package com.application.haominwu.randomcatapplication.presenter;
 
-public interface BasePresenter<T> {
+public interface BasePresenter {
     void dropView();
 }
