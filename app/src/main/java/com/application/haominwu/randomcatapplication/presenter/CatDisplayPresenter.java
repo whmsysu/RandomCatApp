@@ -5,6 +5,8 @@ import com.application.haominwu.randomcatapplication.model.Cat;
 import com.application.haominwu.randomcatapplication.util.DataAgent;
 import com.blankj.utilcode.util.ToastUtils;
 
+import org.reactivestreams.Subscriber;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,7 +24,7 @@ public class CatDisplayPresenter implements CatDisplayContract.Presenter{
 
     private Cat cat;
     private CatDisplayContract.View mView;
-
+    
     @Inject
     public CatDisplayPresenter(CatDisplayContract.View view) {
         mView = view;

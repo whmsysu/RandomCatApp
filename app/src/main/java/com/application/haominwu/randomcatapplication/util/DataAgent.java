@@ -45,7 +45,7 @@ public class DataAgent {
             public void onComplete() {
                 
             }
-        })).subscribeOn(Schedulers.newThread());
+        }));
         return observable;
     }
 }
