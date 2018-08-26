@@ -31,15 +31,14 @@ public class DataAgent {
 
             @Override
             public void onNext(JSONObject jsonObject) {
-                Gson gson = new Gson();
-                Cat cat = gson.fromJson(jsonObject.toString(), Cat.class);
+                Cat cat = GsonUtil.getInstance().fromJson(jsonObject.toString(), Cat.class);
                 emitter.onNext(cat);
                 emitter.onComplete();
             }
 
             @Override
             public void onError(Throwable e) {
-                emitter.onError(e);
+
             }
 
             @Override
