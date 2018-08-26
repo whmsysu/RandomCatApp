@@ -1,13 +1,13 @@
 package com.application.haominwu.randomcatapplication.util;
 
 import com.application.haominwu.randomcatapplication.model.Cat;
-import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -45,7 +45,7 @@ public class DataAgent {
             public void onComplete() {
                 
             }
-        }));
+        })).subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread());
         return observable;
     }
 }
