@@ -4,6 +4,10 @@ import com.google.gson.Gson;
 
 class GsonUtil {
 
+    private GsonUtil(){
+
+    }
+
     private static class GsonHolder{
         private static final Gson INSTANCE = new Gson();
     }
