@@ -1,20 +1,24 @@
 package com.application.haominwu.randomcatapplication.util;
 
 
-import org.json.JSONObject;
-
 import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.Call;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.ResponseBody;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public class HttpUtil {
     private static final HttpUtil ourInstance = new HttpUtil();
 
-    private static final OkHttpClient okHttpClient = new OkHttpClient();
+    public static final String BASE_URL = "https://aws.random.cat/";
+
+    private static Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build();
+
+    private static RandomCatService randomCatService = retrofit.create(RandomCatService.class);
+
 
     public static HttpUtil getInstance() {
         return ourInstance;
@@ -24,16 +28,7 @@ public class HttpUtil {
 
     }
 
-    public Observable fetchACatApiCall(){
-        Observable observable = Observable.create((ObservableOnSubscribe<JSONObject>) emitter -> {
-            Request request = new Request.Builder().url("https://aws.random.cat/meow")
-                    .get().build();
-            Call call = okHttpClient.newCall(request);
-            Response response = call.execute();
-            JSONObject responseObject=new JSONObject(response.body().string());
-            emitter.onNext(responseObject);
-            emitter.onComplete();
-        }).subscribeOn(Schedulers.newThread());
-        return observable;
+    public Observable<ResponseBody> fetchACatApiCall(){
+        return randomCatService.randomACat().subscribeOn(Schedulers.io());
     }
 }
