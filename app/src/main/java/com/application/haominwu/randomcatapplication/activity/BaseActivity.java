@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.application.haominwu.randomcatapplication.util.ActivityCollector;
+
 import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -13,6 +15,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutResId());
         ButterKnife.bind(this);
         init();
+        ActivityCollector.pushActivity(this);
     }
 
     /**
@@ -24,4 +27,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     public abstract int getLayoutResId();
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityCollector.popActivity(this);
+    }
 }

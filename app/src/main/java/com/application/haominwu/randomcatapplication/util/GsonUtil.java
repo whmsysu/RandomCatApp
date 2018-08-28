@@ -2,7 +2,7 @@ package com.application.haominwu.randomcatapplication.util;
 
 import com.google.gson.Gson;
 
-class GsonUtil {
+public class GsonUtil {
 
     private GsonUtil(){
 

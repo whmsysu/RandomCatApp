@@ -2,15 +2,13 @@ package com.application.haominwu.randomcatapplication.presenter;
 
 import com.application.haominwu.randomcatapplication.contract.CatDisplayContract;
 import com.application.haominwu.randomcatapplication.model.Cat;
-import com.application.haominwu.randomcatapplication.util.DataAgent;
+import com.application.haominwu.randomcatapplication.Network.DataAgent;
 import com.blankj.utilcode.util.ToastUtils;
 
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;

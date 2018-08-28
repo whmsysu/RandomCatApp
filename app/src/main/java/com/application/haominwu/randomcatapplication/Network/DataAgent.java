@@ -1,6 +1,7 @@
-package com.application.haominwu.randomcatapplication.util;
+package com.application.haominwu.randomcatapplication.Network;
 
 import com.application.haominwu.randomcatapplication.model.Cat;
+import com.application.haominwu.randomcatapplication.util.GsonUtil;
 
 import java.io.IOException;
 
