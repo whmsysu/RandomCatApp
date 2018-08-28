@@ -11,6 +11,7 @@ import com.application.haominwu.randomcatapplication.presenter.CatDisplayPresent
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.jakewharton.rxbinding2.view.RxView;
+import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
 
 import java.util.concurrent.TimeUnit;
@@ -38,26 +39,23 @@ public class CatDisplayView implements CatDisplayContract.View {
         RxView.clicks(oneByOneButton)
                 .throttleFirst(2, TimeUnit.SECONDS)
                 .subscribe(o -> {
-                    if (NetworkUtils.isConnected()) {
-                        if (catImagePresenter != null) catImagePresenter.fetchARandomCatOneByOne();
-                    }
-
+                    if (catImagePresenter != null) catImagePresenter.fetchARandomCatOneByOne();
                 });
 
         RxView.clicks(twoApiCallButton)
                 .throttleFirst(2, TimeUnit.SECONDS)
                 .subscribe(o -> {
-                    if (NetworkUtils.isConnected()) {
-                        if (catImagePresenter != null)
-                            catImagePresenter.fetchARandomCatByTwoApiCall();
-                    }
+                    if (catImagePresenter != null)
+                        catImagePresenter.fetchARandomCatByTwoApiCall();
                 });
     }
 
     @Override
     public void updateCatImage(String url) {
+        Logger.d(url);
         pb.setVisibility(View.GONE);
-        Picasso.get().load(url).resize(ConvertUtils.dp2px(200), ConvertUtils.dp2px(200)).centerCrop().into(imageViewCat);
+        if (url != null)
+            Picasso.get().load(url).resize(ConvertUtils.dp2px(200), ConvertUtils.dp2px(200)).centerCrop().into(imageViewCat);
     }
 
     @Override

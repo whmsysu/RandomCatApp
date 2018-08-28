@@ -6,6 +6,8 @@ import com.blankj.utilcode.util.Utils;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
+import org.litepal.LitePal;
+
 
 public class RandomCatApplication extends Application {
     @Override
@@ -13,5 +15,6 @@ public class RandomCatApplication extends Application {
         super.onCreate();
         Logger.addLogAdapter(new AndroidLogAdapter());
         Utils.init(this);
+        LitePal.initialize(this);
     }
 }
