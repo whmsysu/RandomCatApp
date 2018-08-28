@@ -24,11 +24,6 @@ public class CatDisplayPresenter implements CatDisplayContract.Presenter{
     private Cat cat;
     private CatDisplayContract.View mView;
 
-    @Inject
-    public CatDisplayPresenter(CatDisplayContract.View view) {
-        mView = view;
-    }
-
     /**
      * Fetch a random cat and then fetch another random cat
      */
@@ -93,6 +88,11 @@ public class CatDisplayPresenter implements CatDisplayContract.Presenter{
             }
         });
 
+    }
+
+    @Override
+    public void attachView(CatDisplayContract.View view) {
+        mView = view;
     }
 
     @Override

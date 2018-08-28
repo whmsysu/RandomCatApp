@@ -14,7 +14,8 @@ public class MainActivity extends BaseActivity {
     protected void init() {
         super.init();
         CatDisplayView catDisplayView = new CatDisplayView(findViewById(R.id.lr_cat_display));
-        catDisplayPresenter = new CatDisplayPresenter(catDisplayView);
+        catDisplayPresenter = new CatDisplayPresenter();
+        catDisplayPresenter.attachView(catDisplayView);
         catDisplayView.setPresenter(catDisplayPresenter);
     }
 

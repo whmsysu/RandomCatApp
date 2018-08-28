@@ -10,7 +10,7 @@ public interface CatDisplayContract {
         void showLoading();
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter<CatDisplayContract.View> {
         void fetchARandomCatOneByOne();
         void fetchARandomCatByTwoApiCall();
     }
