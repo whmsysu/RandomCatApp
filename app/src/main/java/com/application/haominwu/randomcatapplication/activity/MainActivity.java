@@ -1,20 +1,26 @@
 package com.application.haominwu.randomcatapplication.activity;
 
-
 import com.application.haominwu.randomcatapplication.R;
+import com.application.haominwu.randomcatapplication.di.component.DaggerCatDisplayComponent;
+import com.application.haominwu.randomcatapplication.di.module.CatDisplayModule;
 import com.application.haominwu.randomcatapplication.presenter.CatDisplayPresenter;
 import com.application.haominwu.randomcatapplication.view.CatDisplayView;
+
+import javax.inject.Inject;
 
 
 public class MainActivity extends BaseActivity {
 
-    private CatDisplayPresenter catDisplayPresenter;
+    @Inject
+    CatDisplayPresenter catDisplayPresenter;
+
+    @Inject
+    CatDisplayView catDisplayView;
 
     @Override
     protected void init() {
         super.init();
-        CatDisplayView catDisplayView = new CatDisplayView(findViewById(R.id.lr_cat_display));
-        catDisplayPresenter = new CatDisplayPresenter();
+        DaggerCatDisplayComponent.builder().catDisplayModule(new CatDisplayModule(findViewById(R.id.lr_cat_display))).build().inject(this);
         catDisplayPresenter.attachView(catDisplayView);
         catDisplayView.setPresenter(catDisplayPresenter);
     }

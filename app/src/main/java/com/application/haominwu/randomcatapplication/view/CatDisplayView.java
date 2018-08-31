@@ -9,12 +9,11 @@ import com.application.haominwu.randomcatapplication.R;
 import com.application.haominwu.randomcatapplication.contract.CatDisplayContract;
 import com.application.haominwu.randomcatapplication.presenter.CatDisplayPresenter;
 import com.blankj.utilcode.util.ConvertUtils;
-import com.blankj.utilcode.util.NetworkUtils;
 import com.jakewharton.rxbinding2.view.RxView;
-import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
 
 import java.util.concurrent.TimeUnit;
+
 
 public class CatDisplayView implements CatDisplayContract.View {
 
@@ -27,7 +26,6 @@ public class CatDisplayView implements CatDisplayContract.View {
     private Button oneByOneButton;
 
     private Button twoApiCallButton;
-
 
     public CatDisplayView(View view) {
 
@@ -52,7 +50,6 @@ public class CatDisplayView implements CatDisplayContract.View {
 
     @Override
     public void updateCatImage(String url) {
-        Logger.d(url);
         pb.setVisibility(View.GONE);
         if (url != null)
             Picasso.get().load(url).resize(ConvertUtils.dp2px(200), ConvertUtils.dp2px(200)).centerCrop().into(imageViewCat);

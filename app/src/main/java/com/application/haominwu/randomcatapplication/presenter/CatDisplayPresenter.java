@@ -4,7 +4,6 @@ import com.application.haominwu.randomcatapplication.contract.CatDisplayContract
 import com.application.haominwu.randomcatapplication.model.Cat;
 import com.application.haominwu.randomcatapplication.Network.DataAgent;
 import com.blankj.utilcode.util.ToastUtils;
-import com.orhanobut.logger.Logger;
 
 
 import java.util.ArrayList;
