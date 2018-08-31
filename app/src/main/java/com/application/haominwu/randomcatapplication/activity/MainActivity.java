@@ -2,7 +2,6 @@ package com.application.haominwu.randomcatapplication.activity;
 
 import com.application.haominwu.randomcatapplication.R;
 import com.application.haominwu.randomcatapplication.di.component.DaggerCatDisplayComponent;
-import com.application.haominwu.randomcatapplication.di.module.CatDisplayModule;
 import com.application.haominwu.randomcatapplication.presenter.CatDisplayPresenter;
 import com.application.haominwu.randomcatapplication.view.CatDisplayView;
 
@@ -20,7 +19,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void init() {
         super.init();
-        DaggerCatDisplayComponent.builder().catDisplayModule(new CatDisplayModule(findViewById(R.id.lr_cat_display))).build().inject(this);
+        DaggerCatDisplayComponent.builder().rootView(findViewById(android.R.id.content)).build().inject(this);
         catDisplayPresenter.attachView(catDisplayView);
         catDisplayView.setPresenter(catDisplayPresenter);
     }

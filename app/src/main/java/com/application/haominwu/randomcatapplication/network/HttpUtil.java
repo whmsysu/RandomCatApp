@@ -1,4 +1,4 @@
-package com.application.haominwu.randomcatapplication.Network;
+package com.application.haominwu.randomcatapplication.network;
 
 
 import io.reactivex.Observable;

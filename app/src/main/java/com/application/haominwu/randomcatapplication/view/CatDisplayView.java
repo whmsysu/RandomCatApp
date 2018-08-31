@@ -27,12 +27,12 @@ public class CatDisplayView implements CatDisplayContract.View {
 
     private Button twoApiCallButton;
 
-    public CatDisplayView(View view) {
+    public CatDisplayView(View rootView) {
 
-        imageViewCat = view.findViewById(R.id.iv_cat);
-        pb = view.findViewById(R.id.pb);
-        oneByOneButton = view.findViewById(R.id.btn_random_cat_one_by_one);
-        twoApiCallButton = view.findViewById(R.id.btn_random_cat_two_api_call);
+        imageViewCat = rootView.findViewById(R.id.iv_cat);
+        pb = rootView.findViewById(R.id.pb);
+        oneByOneButton = rootView.findViewById(R.id.btn_random_cat_one_by_one);
+        twoApiCallButton = rootView.findViewById(R.id.btn_random_cat_two_api_call);
 
         RxView.clicks(oneByOneButton)
                 .throttleFirst(2, TimeUnit.SECONDS)

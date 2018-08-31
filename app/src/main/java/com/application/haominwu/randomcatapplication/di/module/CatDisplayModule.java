@@ -12,15 +12,9 @@ import dagger.Provides;
 @Module
 public class CatDisplayModule {
 
-    private View mView;
-
-    public CatDisplayModule(View view) {
-        mView = view;
-    }
-
     @Provides
-    CatDisplayView provideCatDisplayView() {
-        return new CatDisplayView(mView);
+    CatDisplayView provideCatDisplayView(View rootView) {
+        return new CatDisplayView(rootView);
     }
 
     @Provides

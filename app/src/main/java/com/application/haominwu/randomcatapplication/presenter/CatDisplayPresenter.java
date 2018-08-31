@@ -2,7 +2,7 @@ package com.application.haominwu.randomcatapplication.presenter;
 
 import com.application.haominwu.randomcatapplication.contract.CatDisplayContract;
 import com.application.haominwu.randomcatapplication.model.Cat;
-import com.application.haominwu.randomcatapplication.Network.DataAgent;
+import com.application.haominwu.randomcatapplication.network.DataAgent;
 import com.blankj.utilcode.util.ToastUtils;
 
 

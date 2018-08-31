@@ -1,4 +1,4 @@
-package com.application.haominwu.randomcatapplication.Network;
+package com.application.haominwu.randomcatapplication.network;
 
 import com.application.haominwu.randomcatapplication.model.Cat;
 import com.application.haominwu.randomcatapplication.util.GsonUtil;
