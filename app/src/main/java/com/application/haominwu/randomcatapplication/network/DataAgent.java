@@ -26,37 +26,44 @@ public class DataAgent {
 
     public Observable<Cat> getACat() {
         if (NetworkUtils.isConnected()) {
-            Observable observable = Observable.create((ObservableOnSubscribe<Cat>) emitter -> HttpUtil.getInstance().fetchACatApiCall().subscribe(new Observer<ResponseBody>() {
-                @Override
-                public void onSubscribe(Disposable d) {
+            Observable<Cat> observable = Observable.create((ObservableOnSubscribe<Cat>) emitter -> {
+                Observable<ResponseBody> responseBodyObservable = HttpUtil.getInstance().fetchACatApiCall();
+                responseBodyObservable.subscribe(new Observer<ResponseBody>(){
 
-                }
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-                @Override
-                public void onNext(ResponseBody responseBody) {
-                    try {
-                        Cat cat = GsonUtil.getInstance().fromJson(responseBody.string(), Cat.class);
-                        Cat.saveACat(cat);
-                        emitter.onNext(cat);
-                        emitter.onComplete();
-                    } catch (IOException e) {
-                        emitter.onError(e);
                     }
-                }
 
-                @Override
-                public void onError(Throwable e) {
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            Cat cat = GsonUtil.getInstance().fromJson(responseBody.string(), Cat.class);
+                            Cat.saveACat(cat);
+                            emitter.onNext(cat);
+                            emitter.onComplete();
+                        } catch (IOException e) {
+                            emitter.onError(e);
+                        }
+                    }
 
-                }
+                    @Override
+                    public void onError(Throwable e) {
 
-                @Override
-                public void onComplete() {
+                    }
 
-                }
-            })).subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread());
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+            }).subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread());;
             return observable;
         } else {
-            return Observable.create(emitter -> emitter.onNext(Cat.getACat()));
+            return Observable.create(emitter -> {
+                emitter.onNext(Cat.getACat());
+                emitter.onComplete();
+            });
         }
     }
 }

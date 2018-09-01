@@ -5,12 +5,12 @@ import com.application.haominwu.randomcatapplication.view.BaseView;
 
 public interface CatDisplayContract {
 
-    interface View extends BaseView {
+    interface IView extends BaseView {
         void updateCatImage(String url);
         void showLoading();
     }
 
-    interface Presenter extends BasePresenter<CatDisplayContract.View> {
+    interface IPresenter extends BasePresenter<IView> {
         void fetchARandomCatOneByOne();
         void fetchARandomCatByTwoApiCall();
     }

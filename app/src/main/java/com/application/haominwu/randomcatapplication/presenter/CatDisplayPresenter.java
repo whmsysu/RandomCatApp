@@ -17,10 +17,10 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 
 
-public class CatDisplayPresenter implements CatDisplayContract.Presenter {
+public class CatDisplayPresenter implements CatDisplayContract.IPresenter {
 
     private Cat cat;
-    private CatDisplayContract.View mView;
+    private CatDisplayContract.IView mView;
 
     /**
      * Fetch a random cat and then fetch another random cat
@@ -96,12 +96,12 @@ public class CatDisplayPresenter implements CatDisplayContract.Presenter {
     }
 
     @Override
-    public void attachView(CatDisplayContract.View view) {
+    public void attachView(CatDisplayContract.IView view) {
         mView = view;
     }
 
     @Override
-    public void dropView() {
+    public void detachView() {
         mView = null;
     }
 }

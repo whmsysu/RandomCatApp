@@ -34,6 +34,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        catDisplayPresenter.dropView();
+        catDisplayPresenter.detachView();
     }
 }

@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso;
 import java.util.concurrent.TimeUnit;
 
 
-public class CatDisplayView implements CatDisplayContract.View {
+public class CatDisplayView implements CatDisplayContract.IView {
 
     private CatDisplayPresenter catImagePresenter;
 
