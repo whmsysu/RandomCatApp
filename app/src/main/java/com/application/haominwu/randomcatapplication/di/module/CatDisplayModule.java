@@ -2,6 +2,7 @@ package com.application.haominwu.randomcatapplication.di.module;
 
 import android.view.View;
 
+import com.application.haominwu.randomcatapplication.di.qualifier.RootViewAnnotation;
 import com.application.haominwu.randomcatapplication.presenter.CatDisplayPresenter;
 import com.application.haominwu.randomcatapplication.view.CatDisplayView;
 
@@ -13,7 +14,7 @@ import dagger.Provides;
 public class CatDisplayModule {
 
     @Provides
-    CatDisplayView provideCatDisplayView(View rootView) {
+    CatDisplayView provideCatDisplayView(@RootViewAnnotation View rootView) {
         return new CatDisplayView(rootView);
     }
 
