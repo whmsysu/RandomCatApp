@@ -2,12 +2,12 @@ package com.application.haominwu.randomcatapplication.util;
 
 import android.app.Activity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ActivityCollector {
 
-    private static Set<Activity> activities = new HashSet<>();
+    private static List<Activity> activities = new ArrayList<>();
 
     /**
      *
@@ -30,6 +30,14 @@ public class ActivityCollector {
      */
     public static void clearAllActivities() {
        activities.clear();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static Activity getTopActivity() {
+        return activities.get(activities.size() - 1);
     }
 
 }
