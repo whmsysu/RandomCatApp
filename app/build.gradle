@@ -54,4 +54,8 @@ dependencies {
     //Litepal
     implementation 'org.litepal.android:core:+'
 
+    //LeakCanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:+'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:+'
+
 }
