@@ -38,8 +38,11 @@ public class CatDisplayPresenter implements CatDisplayContract.IPresenter {
             @Override
             public void onNext(Cat nowCat) {
                 cat = nowCat;
-                if (nowCat != null) mView.updateCatImage(cat.getFile());
-                else mView.updateCatImage(null);
+                if (nowCat != null) {
+                    if (mView != null) mView.updateCatImage(cat.getFile());
+                } else {
+                    if (mView != null) mView.updateCatImage(null);
+                }
             }
 
             @Override
@@ -88,8 +91,11 @@ public class CatDisplayPresenter implements CatDisplayContract.IPresenter {
                 Random random = new Random();
                 int index = random.nextInt(1);
                 cat = cats.get(index);
-                if (cat != null) mView.updateCatImage(cat.getFile());
-                else mView.updateCatImage(null);
+                if (cat != null) {
+                    if (mView != null) mView.updateCatImage(cat.getFile());
+                } else {
+                    if (mView != null) mView.updateCatImage(null);
+                }
             }
         });
 
