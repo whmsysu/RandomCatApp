@@ -1,5 +1,7 @@
 package com.application.haominwu.randomcatapplication.activity;
 
+import android.support.annotation.LayoutRes;
+
 import com.application.haominwu.randomcatapplication.R;
 import com.application.haominwu.randomcatapplication.di.component.DaggerCatDisplayComponent;
 import com.application.haominwu.randomcatapplication.presenter.CatDisplayPresenter;
@@ -26,7 +28,7 @@ public class MainActivity extends BaseActivity {
 
 
     @Override
-    public int getLayoutResId() {
+    public @LayoutRes int getLayoutResId() {
         return R.layout.activity_main;
     }
 
