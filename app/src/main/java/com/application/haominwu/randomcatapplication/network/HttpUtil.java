@@ -29,16 +29,16 @@ public class HttpUtil {
         // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         // add your other interceptors …
 
         // add logging as last interceptor
-        httpClient.addInterceptor(logging);  // <-- this is the important line!
+        httpClientBuilder.addInterceptor(logging);  // <-- this is the important line!
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(httpClient.build())
+                .client(httpClientBuilder.build())
                 .build();
 
         randomCatService = retrofit.create(RandomCatService.class);
