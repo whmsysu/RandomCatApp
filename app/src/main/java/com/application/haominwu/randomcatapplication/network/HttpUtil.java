@@ -33,7 +33,7 @@ public class HttpUtil {
         // add your other interceptors …
 
         // add logging as last interceptor
-        httpClientBuilder.addInterceptor(logging);  // <-- this is the important line!
+        httpClientBuilder.addInterceptor(logging);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)

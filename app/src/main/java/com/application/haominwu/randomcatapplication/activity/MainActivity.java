@@ -20,8 +20,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void init() {
         super.init();
-
-
         DaggerCatDisplayComponent.builder().rootView(findViewById(android.R.id.content)).build().inject(this);
         catDisplayPresenter.attachView(catDisplayView);
         catDisplayView.setPresenter(catDisplayPresenter);
