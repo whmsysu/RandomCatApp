@@ -2,6 +2,7 @@ package com.application.haominwu.randomcatapplication.application;
 
 import android.app.Application;
 
+import com.application.haominwu.randomcatapplication.network.HttpUtil;
 import com.blankj.utilcode.util.Utils;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -20,5 +21,6 @@ public class RandomCatApplication extends Application {
         if (!LeakCanary.isInAnalyzerProcess(this)) {
             LeakCanary.install(this);
         }
+        HttpUtil.init(this);
     }
 }

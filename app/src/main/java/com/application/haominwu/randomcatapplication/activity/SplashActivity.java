@@ -2,7 +2,6 @@ package com.application.haominwu.randomcatapplication.activity;
 
 import android.animation.Animator;
 import android.content.Intent;
-import android.os.Handler;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.application.haominwu.randomcatapplication.R;
