@@ -4,6 +4,7 @@ package com.application.haominwu.randomcatapplication.network;
 import android.content.Context;
 
 import com.application.haominwu.randomcatapplication.network.Cookie.CookieManger;
+import com.blankj.utilcode.util.DeviceUtils;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
@@ -36,11 +37,21 @@ public class HttpUtil {
 
     private HttpUtil(Context context) {
 
+        OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
+
+        //Basic Interceptor
+        BasicParamsInterceptor basicParamsInterceptor = new BasicParamsInterceptor.Builder()
+                        .addHeaderParam("User-Agent", "Random Cat App")
+                        .addQueryParam("device_id", DeviceUtils.getAndroidID())
+                        .addQueryParam("api_version", "1.0")
+                        .build();
+        httpClientBuilder.addInterceptor(basicParamsInterceptor);
+
+        //Log Interceptor
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         // add your other interceptors …
 
         // add logging as last interceptor
@@ -59,7 +70,7 @@ public class HttpUtil {
     }
 
     private HttpUtil() {
-        
+
     }
 
     public Observable<ResponseBody> fetchACatApiCall() {
