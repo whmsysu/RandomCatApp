@@ -6,6 +6,7 @@ import android.content.Context;
 import com.application.haominwu.randomcatapplication.network.Cookie.CookieManger;
 import com.blankj.utilcode.util.DeviceUtils;
 
+
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
@@ -36,7 +37,6 @@ public class HttpUtil {
     }
 
     private HttpUtil(Context context) {
-
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
 
         //Basic Interceptor

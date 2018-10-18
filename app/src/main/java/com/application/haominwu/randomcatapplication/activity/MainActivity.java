@@ -1,6 +1,6 @@
 package com.application.haominwu.randomcatapplication.activity;
 
-import android.support.annotation.LayoutRes;
+import androidx.annotation.LayoutRes;
 
 import com.application.haominwu.randomcatapplication.R;
 import com.application.haominwu.randomcatapplication.di.component.DaggerCatDisplayComponent;
