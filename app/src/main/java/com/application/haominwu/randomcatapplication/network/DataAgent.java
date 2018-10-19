@@ -4,13 +4,9 @@ import com.application.haominwu.randomcatapplication.model.Cat;
 import com.application.haominwu.randomcatapplication.util.GsonUtil;
 import com.blankj.utilcode.util.NetworkUtils;
 
-import java.io.IOException;
-
 import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 
@@ -26,39 +22,16 @@ public class DataAgent {
 
     public Observable<Cat> getACat() {
         if (NetworkUtils.isConnected()) {
-            Observable<Cat> observable = Observable.create((ObservableOnSubscribe<Cat>) emitter -> {
-                Observable<ResponseBody> responseBodyObservable = HttpUtil.getInstance().fetchACatApiCall();
-                responseBodyObservable.subscribe(new Observer<ResponseBody>(){
-
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        try {
-                            Cat cat = GsonUtil.getInstance().fromJson(responseBody.string(), Cat.class);
-                            Cat.saveACat(cat);
-                            emitter.onNext(cat);
-                            emitter.onComplete();
-                        } catch (IOException e) {
-                            emitter.onError(e);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
+            return HttpUtil.getInstance().fetchACatApiCall().flatMap((Function<ResponseBody, Observable<Cat>>) responseBody -> {
+                Cat cat = GsonUtil.getInstance().fromJson(responseBody.string(), Cat.class);
+                Cat.saveACat(cat);
+                Observable<Cat> observable = Observable.create(emitter -> {
+                    emitter.onNext(cat);
+                    emitter.onComplete();
                 });
-            }).subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread());;
-            return observable;
+                observable.subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread());
+                return observable;
+            });
         } else {
             return Observable.create(emitter -> {
                 emitter.onNext(Cat.getACat());
