@@ -5,7 +5,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.application.haominwu.randomcatapplication.util.ActivityCollector;
+import com.application.haominwu.randomcatapplication.util.ActivityManager;
 import com.noober.background.BackgroundLibrary;
 
 import butterknife.ButterKnife;
@@ -18,7 +18,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutResId());
         ButterKnife.bind(this);
         init();
-        ActivityCollector.pushActivity(this);
+        ActivityManager.pushActivity(this);
 
     }
 
@@ -36,6 +36,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ActivityCollector.popActivity(this);
+        ActivityManager.popActivity(this);
     }
 }
