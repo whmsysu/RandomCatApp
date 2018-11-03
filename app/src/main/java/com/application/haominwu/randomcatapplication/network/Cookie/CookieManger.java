@@ -23,7 +23,7 @@ public class CookieManger implements CookieJar {
 
     @Override
     public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-        if (cookies != null && cookies.size() > 0) {
+        if (cookies.size() > 0) {
             for (Cookie item : cookies) {
                 cookieStore.add(url, item);
             }

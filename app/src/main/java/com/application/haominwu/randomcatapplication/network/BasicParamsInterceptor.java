@@ -27,10 +27,10 @@ import okio.Buffer;
  */
 public class BasicParamsInterceptor implements Interceptor {
 
-    Map<String, String> queryParamsMap = new HashMap<>();
-    Map<String, String> paramsMap = new HashMap<>();
-    Map<String, String> headerParamsMap = new HashMap<>();
-    List<String> headerLinesList = new ArrayList<>();
+    private Map<String, String> queryParamsMap = new HashMap<>();
+    private Map<String, String> paramsMap = new HashMap<>();
+    private Map<String, String> headerParamsMap = new HashMap<>();
+    private List<String> headerLinesList = new ArrayList<>();
 
     private BasicParamsInterceptor() {
 
@@ -45,9 +45,8 @@ public class BasicParamsInterceptor implements Interceptor {
         // process header params inject
         Headers.Builder headerBuilder = request.headers().newBuilder();
         if (headerParamsMap.size() > 0) {
-            Iterator iterator = headerParamsMap.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry entry = (Map.Entry) iterator.next();
+            for (Object o : headerParamsMap.entrySet()) {
+                Map.Entry entry = (Map.Entry) o;
                 headerBuilder.add((String) entry.getKey(), (String) entry.getValue());
             }
         }
@@ -71,9 +70,8 @@ public class BasicParamsInterceptor implements Interceptor {
             if (request.body() instanceof FormBody) {
                 FormBody.Builder newFormBodyBuilder = new FormBody.Builder();
                 if (paramsMap.size() > 0) {
-                    Iterator iterator = paramsMap.entrySet().iterator();
-                    while (iterator.hasNext()) {
-                        Map.Entry entry = (Map.Entry) iterator.next();
+                    for (Object o : paramsMap.entrySet()) {
+                        Map.Entry entry = (Map.Entry) o;
                         newFormBodyBuilder.add((String) entry.getKey(), (String) entry.getValue());
                     }
                 }
@@ -91,9 +89,8 @@ public class BasicParamsInterceptor implements Interceptor {
             } else if (request.body() instanceof MultipartBody) {
                 MultipartBody.Builder multipartBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
 
-                Iterator iterator = paramsMap.entrySet().iterator();
-                while (iterator.hasNext()) {
-                    Map.Entry entry = (Map.Entry) iterator.next();
+                for (Object o : paramsMap.entrySet()) {
+                    Map.Entry entry = (Map.Entry) o;
                     multipartBuilder.addFormDataPart((String) entry.getKey(), (String) entry.getValue());
                 }
 
@@ -126,18 +123,14 @@ public class BasicParamsInterceptor implements Interceptor {
         if (mediaType == null) {
             return false;
         }
-        if (!TextUtils.equals(mediaType.subtype(), "x-www-form-urlencoded")) {
-            return false;
-        }
-        return true;
+        return TextUtils.equals(mediaType.subtype(), "x-www-form-urlencoded");
     }
 
     // func to inject params into url
     private Request injectParamsIntoUrl(HttpUrl.Builder httpUrlBuilder, Request.Builder requestBuilder, Map<String, String> paramsMap) {
         if (paramsMap.size() > 0) {
-            Iterator iterator = paramsMap.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry entry = (Map.Entry) iterator.next();
+            for (Object o : paramsMap.entrySet()) {
+                Map.Entry entry = (Map.Entry) o;
                 httpUrlBuilder.addQueryParameter((String) entry.getKey(), (String) entry.getValue());
             }
             requestBuilder.url(httpUrlBuilder.build());
