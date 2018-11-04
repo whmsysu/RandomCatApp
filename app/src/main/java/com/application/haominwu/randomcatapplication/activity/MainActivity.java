@@ -1,6 +1,7 @@
 package com.application.haominwu.randomcatapplication.activity;
 
 import androidx.annotation.LayoutRes;
+import hugo.weaving.DebugLog;
 
 import com.application.haominwu.randomcatapplication.R;
 import com.application.haominwu.randomcatapplication.di.component.DaggerCatDisplayComponent;
@@ -18,6 +19,7 @@ public class MainActivity extends BaseActivity {
     CatDisplayView catDisplayView;
 
     @Override
+    @DebugLog
     protected void init() {
         super.init();
         DaggerCatDisplayComponent.builder().rootView(findViewById(android.R.id.content)).build().inject(this);
